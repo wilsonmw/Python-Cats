@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Cats!!</h1>
+    <h3>Welcome {{first_name}}</h3>
+    <br>
+    <a href='/'>Log out!</a>
+    <a href="/addNewCatPage">Add a Cat!</a>
+    <br>
+    <h3>Table of Cats</h3>
+    <table style="border: 1px solid black">
+        <tr>
+            <th style="border: 1px solid black">Name</th>
+            <th style="border: 1px solid black">Age</th>
+            <th style="border: 1px solid black">Likes</th>
+            <th style="border: 1px solid black">Action</th>
+        </tr>
+        {% for cat in cats %}
+        <tr>
+            <td style="border: 1px solid black"><a href='/show/{{cat.id}}'>{{cat.name}}</a></td> <td style="border: 1px solid black">{{cat.age}}</td> <td style="border: 1px solid black">{{cat.likes}}</td>
+            {% if request.session.user == cat.user_id %}
+            <td style="border: 1px solid black"><form action='/delete' method='POST'>
+                {% csrf_token %}
+                <input type='hidden' name='id' value='{{cat.id}}'>
+                <input type='submit' value = "Delete">
+                </form>
+                <form action="/editPage" method='POST'>
+                {% csrf_token %}
+                <input type='hidden' name='id' value='{{cat.id}}'>
+                <input type='submit' value = 'Edit'>
+            </form></td>
+            {% endif %}
+            {% if request.session.user != cat.user_id %}
+            <td style="border: 1px solid black"><form action="/addLike" method='POST'>
+                {% csrf_token %}
+                <input type='hidden' name='id' value='{{cat.id}}'>
+                <input type='submit' value = 'Add Like'>
+            </form></td>
+            {% endif %}
+        {% endfor %}
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Add a cat...</h2>
+
+    <form action='/addNewCat' method='POST'>
+        {% csrf_token %}
+        Name: <input type='text' name='name' placeholder="Enter cat's name">
+        Age: <input type='integer' name='age' placeholder="Enter cat's age">
+        <input type='submit' value='Add Cat!'>
+    
+    </form>
+</body>
+</html>
